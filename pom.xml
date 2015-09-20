@@ -7,8 +7,11 @@
     <groupId>name.zemon.david</groupId>
     <artifactId>propwareide-server</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
 
     <properties>
+        <context.path>/propwareide/server</context.path>
+
         <spring.version>4.2.1.RELEASE</spring.version>
         <hibernate.version>4.3.10.Final</hibernate.version>
         <jackson.version>2.6.1</jackson.version>
@@ -128,7 +131,7 @@
                 <version>9.3.3.v20150827</version>
                 <configuration>
                     <webAppConfig>
-                        <contextPath>/propwareide/server</contextPath>
+                        <contextPath>${context.path}</contextPath>
                     </webAppConfig>
                     <systemProperties>
                         <systemProperty>
@@ -140,6 +143,16 @@
                             <value>${project.build.directory}/logs</value>
                         </systemProperty>
                     </systemProperties>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.2</version>
+                <configuration>
+                    <url>http://david.zemon.name.com:8080/manager/text</url>
+                    <server>TomcatServer</server>
+                    <path>${context.path}</path>
                 </configuration>
             </plugin>
         </plugins>
