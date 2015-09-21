@@ -18,7 +18,7 @@ public class StringWrapper {
     }
 
     public String getContents() {
-        return contents;
+        return this.contents;
     }
 
     public void setContents(String contents) {
@@ -29,19 +29,19 @@ public class StringWrapper {
     public boolean equals(final Object o) {
         if (this == o) return true;
 
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || this.getClass() != o.getClass()) return false;
 
         final StringWrapper that = (StringWrapper) o;
 
         return new EqualsBuilder()
-                .append(contents, that.contents)
+                .append(this.contents, that.contents)
                 .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-                .append(contents)
+                .append(this.contents)
                 .toHashCode();
     }
 }

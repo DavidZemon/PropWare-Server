@@ -1,7 +1,5 @@
 package name.zemon.david.propwareide.server.service;
 
-import name.zemon.david.propwareide.server.pojo.StringWrapper;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -17,14 +15,14 @@ public class LocalFileService implements FileService {
     }
 
     @Override
-    public StringWrapper getFile(final String user, final String project, final String fileName) {
+    public String getFile(final String user, final String project, final String fileName) {
         final File file = new File(String.join(File.separator, this.workspaceRoot, user, project, fileName));
         try (FileInputStream stream = new FileInputStream(file)) {
             byte[] data = new byte[(int) file.length()];
             stream.read(data);
-            return new StringWrapper(new String(data, "UTF-8"));
+            return new String(data, "UTF-8");
         } catch (final IOException ignored) {
-            return new StringWrapper();
+            return "";
         }
     }
 }
