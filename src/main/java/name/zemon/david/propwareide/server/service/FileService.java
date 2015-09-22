@@ -1,8 +1,18 @@
 package name.zemon.david.propwareide.server.service;
 
+import name.zemon.david.propwareide.server.pojo.PWFile;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Collection;
+
 /**
  * Created by david on 9/19/15.
  */
 public interface FileService {
-    String getFile(String user, String project, String fileName);
+    PWFile getFile(String user, String project, String fileName) throws IOException;
+
+    Collection<PWFile> getAllProjectFiles(String user, String project) throws IOException;
+
+    void save(String user, String project, PWFile file) throws IOException;
 }

@@ -3,30 +3,25 @@ package name.zemon.david.propwareide.server.pojo;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by david on 9/20/15.
  */
 public class Project {
-    private String              name;
-    private Map<String, String> files;
+    private String     name;
+    private Collection<String> fileNames;
 
     public Project() {
         this.name = "";
-        this.files = new HashMap<>();
+        this.fileNames = new ArrayList<>();
     }
 
-    public Project(final String name) {
+    public Project(final String name, final Collection<String> fileNames) {
         this.name = name;
-        this.files = new HashMap<>();
-    }
-
-    public Project(final String name, final Map<String, String> files) {
-        this.name = name;
-        this.files = files;
+        this.fileNames = new ArrayList<>(fileNames);
     }
 
     public String getName() {
@@ -37,20 +32,20 @@ public class Project {
         this.name = name;
     }
 
-    public Map<String, String> getFiles() {
-        return Collections.unmodifiableMap(this.files);
+    public Collection<String> getFileNames() {
+        return Collections.unmodifiableCollection(this.fileNames);
     }
 
-    public void setFiles(final Map<String, String> files) {
-        this.files = files;
+    public void setFileNames(final Collection<String> fileNames) {
+        this.fileNames = fileNames;
     }
 
-    public void addFile(final String fileName, final String file) {
-        this.files.put(fileName, file);
+    public void addFileName (final String fileName) {
+        this.fileNames.add(fileName);
     }
 
-    public void addAllFiles(final Map<String, String> files) {
-        this.files.putAll(files);
+    public void addAllFileNames (final Collection<String> fileNames) {
+        this.fileNames.addAll(fileNames);
     }
 
     @Override
@@ -63,7 +58,7 @@ public class Project {
 
         return new EqualsBuilder()
                 .append(this.name, project.name)
-                .append(this.files, project.files)
+                .append(this.fileNames, project.fileNames)
                 .isEquals();
     }
 
@@ -71,7 +66,7 @@ public class Project {
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
                 .append(this.name)
-                .append(this.files)
+                .append(this.fileNames)
                 .toHashCode();
     }
 }

@@ -25,8 +25,8 @@ public class ServiceConfig {
     }
 
     @Bean
-    public ProjectService projectService (final FileService fileService) {
-        return new LocalProjectService(this.getWorkspaceRoot(), fileService);
+    public ProjectService projectService () {
+        return new LocalProjectService(this.getWorkspaceRoot());
     }
 
     private String getWorkspaceRoot() {
