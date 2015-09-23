@@ -2,6 +2,9 @@ package name.zemon.david.propwareide.server.controller;
 
 import name.zemon.david.propwareide.server.pojo.PWFile;
 import name.zemon.david.propwareide.server.service.FileService;
+import org.apache.commons.lang3.ArrayUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +19,7 @@ import java.util.Collection;
 @Controller
 @RequestMapping("file")
 public class FileController {
+    private static final Logger LOG = LoggerFactory.getLogger(FileController.class);
     private final FileService fileService;
 
     @Inject
@@ -47,13 +51,14 @@ public class FileController {
     @ResponseBody
     public void create(final String user, final String project, final @PathVariable("name") String name)
             throws IOException {
-        this.fileService.create(user, project, name);
+        LOG.info("File created? ({}/{}/{}) {}", user, project, name, this.fileService.create(user, project, name));
     }
 
     @RequestMapping(value = "{name}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public void delete(final String user, final String project, final @PathVariable("name") String name)
             throws IOException {
+        LOG.debug("Deleting file: {}/{}/{}", user, project, name);
         this.fileService.delete(user, project, name);
     }
 }

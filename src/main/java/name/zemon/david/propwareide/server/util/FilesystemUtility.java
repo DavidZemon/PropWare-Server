@@ -9,6 +9,8 @@ import java.util.Collections;
  * Created by david on 9/21/15.
  */
 public class FilesystemUtility {
+    public static final String PERIOD_ESCAPE_SEQUENCE = "\\$";
+
     public static Collection<String> getDirectoryContents(final String... directories) {
         final String projectRoot = String.join(File.separator, directories);
         final String[] contents = new File(projectRoot).list();
@@ -27,5 +29,13 @@ public class FilesystemUtility {
         final String absolutePath = String.join(File.separator, path);
         final File file = new File(absolutePath);
         return file.isFile();
+    }
+
+    public static String createUrlSafeString(final String input) {
+        return input.replaceAll("\\.", PERIOD_ESCAPE_SEQUENCE);
+    }
+
+    public static String undoUrlSafeString(final String input) {
+        return input.replaceAll(PERIOD_ESCAPE_SEQUENCE, ".");
     }
 }

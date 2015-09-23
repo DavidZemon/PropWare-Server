@@ -2,6 +2,7 @@ package name.zemon.david.propwareide.server.pojo;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * Created by david on 9/21/15.
@@ -56,5 +57,13 @@ public class PWFile {
                 .append(this.name)
                 .append(this.content)
                 .toHashCode();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("name", this.name)
+                .append("content", this.content)
+                .toString();
     }
 }

@@ -15,6 +15,7 @@
         </encoder>
     </appender>
 
+    <logger name="name.zemon.david" level="DEBUG" />
     <root>
         <level value="INFO"/>
         <appender-ref ref="dailyRollingFileAppender"/>

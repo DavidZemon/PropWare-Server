@@ -2,16 +2,12 @@ package name.zemon.david.propwareide.server.service;
 
 import name.zemon.david.propwareide.server.pojo.PWFile;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-import static name.zemon.david.propwareide.server.util.FilesystemUtility.getDirectoryContents;
-import static name.zemon.david.propwareide.server.util.FilesystemUtility.isFile;
+import static name.zemon.david.propwareide.server.util.FilesystemUtility.*;
 
 /**
  * Created by david on 9/19/15.
@@ -28,8 +24,9 @@ public class LocalFileService implements FileService {
         final File file = new File(String.join(File.separator, this.workspaceRoot, user, project, fileName));
         try (FileInputStream stream = new FileInputStream(file)) {
             byte[] data = new byte[(int) file.length()];
+            //noinspection ResultOfMethodCallIgnored
             stream.read(data);
-            return new PWFile(fileName, new String(data, "UTF-8"));
+            return new PWFile(createUrlSafeString(fileName), new String(data, "UTF-8"));
         }
     }
 
@@ -47,21 +44,25 @@ public class LocalFileService implements FileService {
 
     @Override
     public void save(final String user, final String project, final PWFile pwFile) throws IOException {
-        final File file = new File(String.join(File.separator, this.workspaceRoot, user, project, pwFile.getName()));
+        final File file = new File(String.join(File.separator, this.workspaceRoot, user, project,
+                undoUrlSafeString(pwFile.getName())));
         try (FileOutputStream stream = new FileOutputStream(file)) {
             stream.write(pwFile.getContent().getBytes());
         }
     }
 
     @Override
-    public void create(final String user, final String project, final String name) throws IOException {
-        final File file = new File(String.join(File.separator, this.workspaceRoot, user, project, name));
-        file.createNewFile();
+    public boolean create(final String user, final String project, final String name) throws IOException {
+        final File file = new File(String.join(File.separator, this.workspaceRoot, user, project,
+                undoUrlSafeString(name)));
+        return file.createNewFile();
     }
 
     @Override
-    public void delete(final String user, final String project, final String name) {
-        final File file = new File(String.join(File.separator, this.workspaceRoot, user, project, name));
-        file.delete();
+    public void delete(final String user, final String project, final String name) throws FileNotFoundException {
+        final File file = new File(String.join(File.separator, this.workspaceRoot, user, project,
+                undoUrlSafeString(name)));
+        if (!file.delete())
+            throw new FileNotFoundException(file.toString());
     }
 }
