@@ -1,8 +1,7 @@
 package name.zemon.david.propwareide.server.controller;
 
-import name.zemon.david.propwareide.server.pojo.PWFile;
+import name.zemon.david.propwareide.common.pojo.PWFile;
 import name.zemon.david.propwareide.server.service.FileService;
-import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;

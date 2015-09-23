@@ -1,6 +1,6 @@
 package name.zemon.david.propwareide.server.service;
 
-import name.zemon.david.propwareide.server.pojo.PWFile;
+import name.zemon.david.propwareide.common.pojo.PWFile;
 
 import java.io.*;
 import java.util.ArrayList;

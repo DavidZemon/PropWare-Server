@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>name.zemon.david</groupId>
-    <artifactId>propwareide-server</artifactId>
+    <artifactId>propware-ide-file-server</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
@@ -19,6 +19,13 @@
     </properties>
 
     <dependencies>
+        <!-- Internal -->
+        <dependency>
+            <groupId>name.zemon.david</groupId>
+            <artifactId>prowpare-ide-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
         <!-- Spring -->
         <dependency>
             <groupId>org.springframework</groupId>
