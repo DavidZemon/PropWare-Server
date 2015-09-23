@@ -28,7 +28,7 @@
 
     <filter>
         <filter-name>cores-filter</filter-name>
-        <filter-class>name.zemon.david.propwareide.server.controller.SimpleCORSFilter</filter-class>
+        <filter-class>name.zemon.david.propwareide.common.controller.SimpleCORSFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>cores-filter</filter-name>

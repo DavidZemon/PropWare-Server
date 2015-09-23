@@ -10,7 +10,7 @@
     <packaging>war</packaging>
 
     <properties>
-        <context.path>/propwareide/server</context.path>
+        <context.path>/propwareide/file-server</context.path>
 
         <spring.version>4.2.1.RELEASE</spring.version>
         <hibernate.version>4.3.10.Final</hibernate.version>
@@ -45,11 +45,6 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
             <version>${spring.version}</version>
         </dependency>
 
@@ -104,12 +99,6 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.3.2</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>3.1.0</version>
-            <scope>provided</scope>
         </dependency>
 
         <!-- Test -->
