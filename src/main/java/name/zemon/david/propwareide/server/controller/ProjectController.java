@@ -36,4 +36,10 @@ public class ProjectController {
     public Project get(final String user, @PathVariable("project") final String project) {
         return this.projectService.getProject(user, project);
     }
+
+    @RequestMapping(value = "{project}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public void create(final String user, @PathVariable("project") final String project) {
+        this.projectService.createProject(user, project);
+    }
 }

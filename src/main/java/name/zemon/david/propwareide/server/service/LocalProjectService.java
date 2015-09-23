@@ -2,6 +2,7 @@ package name.zemon.david.propwareide.server.service;
 
 import name.zemon.david.propwareide.server.pojo.Project;
 
+import java.io.File;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -33,5 +34,11 @@ public class LocalProjectService implements ProjectService {
                 .collect(Collectors.toList());
 
         return new Project(projectName, fileNames);
+    }
+
+    @Override
+    public boolean createProject(final String user, final String project) {
+        final File file = new File(String.join(File.separator, this.workspaceRoot, user, project));
+        return file.mkdir();
     }
 }

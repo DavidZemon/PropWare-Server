@@ -11,4 +11,6 @@ public interface ProjectService {
     Collection<String> getUserProjects(String user);
 
     Project getProject(String user, String project);
+
+    boolean createProject(String user, String project);
 }
