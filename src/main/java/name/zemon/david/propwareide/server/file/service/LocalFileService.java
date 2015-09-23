@@ -1,4 +1,4 @@
-package name.zemon.david.propwareide.server.service;
+package name.zemon.david.propwareide.server.file.service;
 
 import name.zemon.david.propwareide.common.pojo.PWFile;
 
@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-import static name.zemon.david.propwareide.server.util.FilesystemUtility.*;
+import static name.zemon.david.propwareide.server.file.util.FilesystemUtility.*;
 
 /**
  * Created by david on 9/19/15.

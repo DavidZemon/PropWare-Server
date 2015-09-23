@@ -1,7 +1,7 @@
-package name.zemon.david.propwareide.server.controller;
+package name.zemon.david.propwareide.server.file.controller;
 
 import name.zemon.david.propwareide.common.pojo.PWFile;
-import name.zemon.david.propwareide.server.service.FileService;
+import name.zemon.david.propwareide.server.file.service.FileService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;

@@ -1,4 +1,4 @@
-package name.zemon.david.propwareide.server.pojo;
+package name.zemon.david.propwareide.server.file.pojo;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;

@@ -1,4 +1,4 @@
-package name.zemon.david.propwareide.server.service;
+package name.zemon.david.propwareide.server.file.service;
 
 
 import name.zemon.david.propwareide.common.pojo.PWFile;

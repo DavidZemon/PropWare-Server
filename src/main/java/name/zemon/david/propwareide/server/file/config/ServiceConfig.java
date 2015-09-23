@@ -1,9 +1,9 @@
-package name.zemon.david.propwareide.server.config;
+package name.zemon.david.propwareide.server.file.config;
 
-import name.zemon.david.propwareide.server.service.FileService;
-import name.zemon.david.propwareide.server.service.LocalFileService;
-import name.zemon.david.propwareide.server.service.LocalProjectService;
-import name.zemon.david.propwareide.server.service.ProjectService;
+import name.zemon.david.propwareide.server.file.service.ProjectService;
+import name.zemon.david.propwareide.server.file.service.FileService;
+import name.zemon.david.propwareide.server.file.service.LocalFileService;
+import name.zemon.david.propwareide.server.file.service.LocalProjectService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;

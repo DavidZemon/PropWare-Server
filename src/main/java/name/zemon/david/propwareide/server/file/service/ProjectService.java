@@ -1,6 +1,6 @@
-package name.zemon.david.propwareide.server.service;
+package name.zemon.david.propwareide.server.file.service;
 
-import name.zemon.david.propwareide.server.pojo.Project;
+import name.zemon.david.propwareide.server.file.pojo.Project;
 
 import java.util.Collection;
 

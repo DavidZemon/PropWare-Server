@@ -1,4 +1,4 @@
-package name.zemon.david.propwareide.server.util;
+package name.zemon.david.propwareide.server.file.util;
 
 import java.io.File;
 import java.util.ArrayList;

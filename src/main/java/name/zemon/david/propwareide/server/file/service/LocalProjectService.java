@@ -1,12 +1,12 @@
-package name.zemon.david.propwareide.server.service;
+package name.zemon.david.propwareide.server.file.service;
 
-import name.zemon.david.propwareide.server.pojo.Project;
+import name.zemon.david.propwareide.server.file.pojo.Project;
 
 import java.io.File;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-import static name.zemon.david.propwareide.server.util.FilesystemUtility.*;
+import static name.zemon.david.propwareide.server.file.util.FilesystemUtility.*;
 
 /**
  * Created by david on 9/20/15.

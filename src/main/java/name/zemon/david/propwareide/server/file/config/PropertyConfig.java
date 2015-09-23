@@ -1,4 +1,4 @@
-package name.zemon.david.propwareide.server.config;
+package name.zemon.david.propwareide.server.file.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;

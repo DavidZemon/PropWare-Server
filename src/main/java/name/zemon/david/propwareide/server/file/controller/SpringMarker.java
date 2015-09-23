@@ -1,4 +1,4 @@
-package name.zemon.david.propwareide.server.controller;
+package name.zemon.david.propwareide.server.file.controller;
 
 /**
  * Created by david on 9/19/15.
