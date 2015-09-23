@@ -45,8 +45,15 @@ public class FileController {
 
     @RequestMapping(value = "{name}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public void create(final String user, final String project, final @PathVariable("name") String name, @RequestBody final PWFile file)
+    public void create(final String user, final String project, final @PathVariable("name") String name)
             throws IOException {
-        this.update(user, project, name, file);
+        this.fileService.create(user, project, name);
+    }
+
+    @RequestMapping(value = "{name}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public void delete(final String user, final String project, final @PathVariable("name") String name)
+            throws IOException {
+        this.fileService.delete(user, project, name);
     }
 }

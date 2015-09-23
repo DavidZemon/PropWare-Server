@@ -52,4 +52,16 @@ public class LocalFileService implements FileService {
             stream.write(pwFile.getContent().getBytes());
         }
     }
+
+    @Override
+    public void create(final String user, final String project, final String name) throws IOException {
+        final File file = new File(String.join(File.separator, this.workspaceRoot, user, project, name));
+        file.createNewFile();
+    }
+
+    @Override
+    public void delete(final String user, final String project, final String name) {
+        final File file = new File(String.join(File.separator, this.workspaceRoot, user, project, name));
+        file.delete();
+    }
 }
