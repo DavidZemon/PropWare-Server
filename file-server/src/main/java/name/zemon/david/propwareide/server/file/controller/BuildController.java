@@ -17,13 +17,13 @@ import java.io.IOException;
  * Created by david on 9/25/15.
  */
 @Controller
-@RequestMapping("buildRequest")
-public class BuildRequestController {
+@RequestMapping("build")
+public class BuildController {
     private final ProjectService projectService;
     private final FileService    fileService;
 
     @Inject
-    public BuildRequestController(final ProjectService projectService, final FileService fileService) {
+    public BuildController(final ProjectService projectService, final FileService fileService) {
         this.projectService = projectService;
         this.fileService = fileService;
     }

@@ -2,6 +2,7 @@ package name.zemon.david.propwareide.server.build.controller;
 
 import name.zemon.david.propwareide.common.pojo.BuildRequest;
 import name.zemon.david.propwareide.common.pojo.BuildResponse;
+import name.zemon.david.propwareide.common.pojo.CommandResult;
 import name.zemon.david.propwareide.common.pojo.PWFile;
 import name.zemon.david.propwareide.server.build.exception.BuildFailedException;
 import name.zemon.david.propwareide.server.build.exception.HangingProcessException;
@@ -11,9 +12,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -41,14 +46,37 @@ public class BuildController {
 
         dropFiles(buildId, buildRequest, projectDirectory);
 
+        BuildResponse buildResponse;
         try {
-            final String cmakeOutput = runCMake(projectDirectory);
-            final String makeOutput = runMake(projectDirectory);
-            final byte[] binary = readElf(buildId, projectDirectory);
-            return new BuildResponse(cmakeOutput, makeOutput, binary);
+            final CommandResult cmakeResult = runCMake(projectDirectory);
+            if (0 == cmakeResult.getExitCode()) {
+                final CommandResult makeResult = runMake(projectDirectory);
+                if (0 == makeResult.getExitCode()) {
+                    final byte[] binary = readElf(buildId, projectDirectory);
+                    buildResponse = new BuildResponse(cmakeResult, makeResult, binary);
+                } else
+                    buildResponse = new BuildResponse(cmakeResult, makeResult, null);
+            } else
+                buildResponse = new BuildResponse(cmakeResult, null, null);
+
+            return sanitizePaths(buildResponse, projectDirectory);
         } finally {
             FileUtils.deleteDirectory(projectDirectory);
         }
+    }
+
+    private static BuildResponse sanitizePaths(@Nonnull final BuildResponse buildResponse, @Nonnull final File
+            projectDirectory) throws IOException {
+        buildResponse.setCmakeResult(sanitizePaths(buildResponse.getCmakeResult(), projectDirectory));
+        buildResponse.setMakeResult(sanitizePaths(buildResponse.getMakeResult(), projectDirectory));
+        return buildResponse;
+    }
+
+    private static CommandResult sanitizePaths(@Nullable final CommandResult commandResult,
+                                               @Nonnull final File directory) throws IOException {
+        if (null != commandResult)
+            commandResult.setOutput(commandResult.getOutput().replaceAll(directory.getCanonicalPath(), "<root>"));
+        return commandResult;
     }
 
     private static void dropFiles(final int buildId, final @Nonnull BuildRequest buildRequest,
@@ -59,13 +87,13 @@ public class BuildController {
             FileBuilder.dropFile(projectDirectory, file.getName().replaceAll("\\$", "."), file.getContent());
     }
 
-    private static String runCMake(@Nonnull final File projectDirectory)
+    private static CommandResult runCMake(@Nonnull final File projectDirectory)
             throws IOException, InterruptedException, HangingProcessException, BuildFailedException {
         final File binaryDirectory = new File(String.join(File.separator, projectDirectory.getCanonicalPath(), "bin"));
         return runCommand(binaryDirectory, "cmake", "..");
     }
 
-    private static String runMake(@Nonnull final File projectDirectory)
+    private static CommandResult runMake(@Nonnull final File projectDirectory)
             throws IOException, InterruptedException, HangingProcessException, BuildFailedException {
         final File binaryDirectory = new File(String.join(File.separator, projectDirectory.getCanonicalPath(), "bin"));
         return runCommand(binaryDirectory, "make", "all");
@@ -88,7 +116,7 @@ public class BuildController {
         }
     }
 
-    private static String runCommand(@Nonnull File workingDirectory, final String command, final String... args)
+    private static CommandResult runCommand(@Nonnull File workingDirectory, final String command, final String... args)
             throws IOException, InterruptedException, HangingProcessException, BuildFailedException {
         if (!workingDirectory.exists())
             if (!workingDirectory.mkdir())
@@ -105,7 +133,6 @@ public class BuildController {
 
         if (!process.waitFor(15, TimeUnit.SECONDS))
             throw new HangingProcessException(String.format("[%s]: %s", workingDirectory.getCanonicalPath(), cmd));
-        final int exitValue = process.exitValue();
 
         final BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
         final StringBuilder sb = new StringBuilder();
@@ -113,12 +140,6 @@ public class BuildController {
         while (null != (line = br.readLine()))
             sb.append(line).append('\n');
 
-        if (0 != exitValue) {
-            LOG.warn("Command failed: \n{}", sb.toString());
-            throw new BuildFailedException(String.format("Build command failed [%s] with error code %d", command,
-                    exitValue));
-        }
-
-        return sb.toString();
+        return new CommandResult(process.exitValue(), sb.toString());
     }
 }

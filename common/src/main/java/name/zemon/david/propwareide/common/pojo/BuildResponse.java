@@ -3,54 +3,44 @@ package name.zemon.david.propwareide.common.pojo;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 /**
  * Created by david on 9/24/15.
  */
 public class BuildResponse {
-    @Nonnull
-    private String cmakeOutput;
-    @Nullable
-    private String makeOutput;
-    @Nullable
-    private byte[] binary;
+    private CommandResult cmakeResult;
+    private CommandResult makeResult;
+    private byte[]        binary;
 
     public BuildResponse() {
     }
 
-    public BuildResponse(@Nonnull final String cmakeOutput, @Nullable final String makeOutput,
-                         @Nullable final byte[] binary) {
-        this.cmakeOutput = cmakeOutput;
-        this.makeOutput = makeOutput;
+    public BuildResponse(final CommandResult cmakeResult, final CommandResult makeResult, final byte[] binary) {
+        this.cmakeResult = cmakeResult;
+        this.makeResult = makeResult;
         this.binary = binary;
     }
 
-    @Nonnull
-    public String getCmakeOutput() {
-        return this.cmakeOutput;
+    public CommandResult getCmakeResult() {
+        return this.cmakeResult;
     }
 
-    public void setCmakeOutput(@Nonnull final String cmakeOutput) {
-        this.cmakeOutput = cmakeOutput;
+    public void setCmakeResult(final CommandResult cmakeResult) {
+        this.cmakeResult = cmakeResult;
     }
 
-    @Nullable
-    public String getMakeOutput() {
-        return this.makeOutput;
+    public CommandResult getMakeResult() {
+        return this.makeResult;
     }
 
-    public void setMakeOutput(@Nullable final String makeOutput) {
-        this.makeOutput = makeOutput;
+    public void setMakeResult(final CommandResult makeResult) {
+        this.makeResult = makeResult;
     }
 
-    @Nullable
     public byte[] getBinary() {
         return this.binary;
     }
 
-    public void setBinary(@Nullable final byte[] binary) {
+    public void setBinary(final byte[] binary) {
         this.binary = binary;
     }
 
@@ -63,16 +53,16 @@ public class BuildResponse {
         final BuildResponse that = (BuildResponse) o;
 
         return new EqualsBuilder()
-                .append(this.cmakeOutput, that.cmakeOutput)
-                .append(this.makeOutput, that.makeOutput)
+                .append(this.cmakeResult, that.cmakeResult)
+                .append(this.makeResult, that.makeResult)
                 .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-                .append(this.cmakeOutput)
-                .append(this.makeOutput)
+                .append(this.cmakeResult)
+                .append(this.makeResult)
                 .toHashCode();
     }
 }
