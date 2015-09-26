@@ -1,6 +1,7 @@
 package name.zemon.david.propwareide.server.file.util;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -11,9 +12,11 @@ import java.util.Collections;
 public class FilesystemUtility {
     public static final String PERIOD_ESCAPE_SEQUENCE = "\\$";
 
-    public static Collection<String> getDirectoryContents(final String... directories) {
-        final String projectRoot = String.join(File.separator, directories);
-        final String[] contents = new File(projectRoot).list();
+    public static Collection<String> getDirectoryContents(final String... directories) throws IOException {
+        final String root = String.join(File.separator, directories);
+        final String[] contents = new File(root).list();
+        if (null == contents)
+            throw new IOException("Can not read contents of non-existent directory: " + root);
         final Collection<String> contentList = new ArrayList<>();
         Collections.addAll(contentList, contents);
         return contentList;
