@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.inject.Inject;
+import java.io.IOException;
 import java.util.Collection;
 
 /**
@@ -27,19 +28,20 @@ public class ProjectController {
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public Collection<String> getAll(final String user) {
+    public Collection<String> getAll(final String user) throws IOException {
         return this.projectService.getUserProjects(user);
     }
 
     @RequestMapping(value = "{project}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public Project get(final String user, @PathVariable("project") final String project) {
+    public Project get(final String user, @PathVariable("project") final String project) throws IOException {
         return this.projectService.getProject(user, project);
     }
 
     @RequestMapping(value = "{project}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public void create(final String user, @PathVariable("project") final String project) {
-        this.projectService.createProject(user, project);
+    public void create(final String user, @PathVariable("project") final String project) throws IOException {
+        if (!this.projectService.createProject(user, project))
+            throw new IOException("Unable to create project");
     }
 }
